@@ -1,0 +1,133 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body {
+    background: #f0f4f8;
+    font-family: 'Poppins', sans-serif;
+    min-height: 100vh;
+    color: #1e293b;
+    padding-bottom: 40px;
+}
+
+h1 {
+    font-weight: 700;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+}
+
+p.text-center {
+    color: #64748b;
+    font-weight: 400;
+}
+
+hr {
+    border-top: 2px solid #cbd5e1;
+    opacity: 0.7;
+    width: 60%;
+    margin: 1.5rem auto;
+}
+
+.card {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #ffffff;
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08), 0 8px 10px -6px rgba(15, 23, 42, 0.04) !important;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 20px 30px -10px rgba(15, 23, 42, 0.12) !important;
+}
+
+.form-label {
+    color: #334155;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+}
+
+.form-select, .form-control {
+    background-color: #f8fafc !important;
+    color: #0f172a !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    padding: 12px 16px !important;
+    font-size: 0.95rem;
+    transition: all 0.25s ease-in-out;
+}
+
+.form-select:focus, .form-control:focus {
+    background-color: #ffffff !important;
+    border-color: #0d9488 !important;
+    box-shadow: 0 0 0 4px rgba(13, 148, 136, 0.15) !important;
+    outline: none;
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 110px;
+}
+
+#btnCalcular {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 1.05rem;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 14px rgba(15, 23, 42, 0.25);
+    transition: all 0.2s ease;
+}
+
+#btnCalcular:hover {
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(15, 23, 42, 0.35);
+}
+
+#btnCalcular:active {
+    transform: translateY(0);
+}
+
+#resultado .card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 2px solid #0d9488 !important;
+}
+
+#resultado .card-header {
+    background: linear-gradient(135deg, #0d9488 0%, #0f766e 100%) !important;
+    color: #ffffff !important;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    padding: 12px;
+}
+
+#resultado h3 {
+    font-family: 'Courier New', Courier, monospace !important;
+    font-size: 1.7rem;
+    letter-spacing: 3px;
+    color: #0f766e !important;
+    background-color: #ccfbf1 !important;
+    border: 1px solid #99f6e4;
+    border-radius: 12px !important;
+    padding: 20px !important;
+    margin-top: 10px;
+    word-break: break-word;
+}
+
+#btnLimpiar {
+    background-color: #e2e8f0;
+    color: #475569;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+#btnLimpiar:hover {
+    background-color: #cbd5e1;
+    color: #0f172a;
+    transform: translateY(-1px);
+}
