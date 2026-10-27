@@ -3,42 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buscador y Resaltador de Texto</title>
-    
-   
+    <title>Buscador y Reemplazador de Texto</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="public/css/main.css">
 </head>
 <body>
     <div class="container mt-5">
         <div class="row justify-content-center">
-            
+
             <div class="col-12 text-center mb-3">
-                <h1>Buscador y Resaltador de Texto</h1>
+                <h1>Buscador y Reemplazador de Texto</h1>
                 <hr>
             </div>
-            
+
             <div class="col-md-8">
                 <div class="card shadow-sm p-4 mb-4">
-                    
+
                     <div class="mb-3">
-                        <label class="form-label fw-bold" for="inputText">Texto base:</label>
-                        <textarea id="inputText" class="form-control" rows="4" placeholder="Escribe o pega tu texto aquí..."></textarea>
+                        <label class="form-label fw-bold" for="textoEntrada">Texto base:</label>
+                        <textarea id="textoEntrada" class="form-control" rows="4" placeholder="Escribe o pega tu texto aquí..."></textarea>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold" for="campoBuscar">Palabra o carácter a buscar:</label>
+                        <input type="text" id="campoBuscar" class="form-control" placeholder="Escribe la palabra a buscar...">
                     </div>
 
                     <div class="mb-4">
-                        <label class="form-label fw-bold" for="inputSearch">Palabra o carácter a buscar:</label>
-                        <input type="text" id="inputSearch" class="form-control" placeholder="Escribe la palabra a buscar...">
+                        <label class="form-label fw-bold" for="campoReemplazar">Reemplazar por:</label>
+                        <input type="text" id="campoReemplazar" class="form-control" placeholder="Escribe el texto de reemplazo...">
                     </div>
 
-                    <button id="btnSearch" type="button" class="btn btn-primary btn-lg w-100 fw-bold">
-                        Buscar
-                    </button>
+                    <div class="d-flex gap-2">
+                        <button id="botonBuscar" type="button" class="btn btn-primary btn-lg w-50 fw-bold">
+                            Buscar
+                        </button>
+                        <button id="botonReemplazar" type="button" class="btn btn-warning btn-lg w-50 fw-bold text-white">
+                            Reemplazar
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-md-8 mb-4" id="alertContainer" style="display: none;">
-                <div id="alertBox" class="alert fw-bold text-center py-3" role="alert">
-                    <span id="alertMessage"></span>
+            <div class="col-md-8 mb-4" id="contenedorAlerta" style="display: none;">
+                <div id="cajaAlerta" class="alert fw-bold text-center py-3" role="alert">
+                    <span id="mensajeAlerta"></span>
                 </div>
             </div>
 
@@ -46,10 +56,10 @@
                 <div class="card shadow-sm">
                     <div class="card-header bg-success text-white fw-bold d-flex justify-content-between align-items-center">
                         <span>TEXTO PROCESADO</span>
-                        <span class="badge bg-light text-dark">Coincidencias: <span id="matchCount">0</span></span>
+                        <span class="badge bg-light text-dark">Coincidencias: <span id="contadorCoincidencias">0</span></span>
                     </div>
                     <div class="card-body">
-                        <div id="outputContainer" class="bg-light p-3 rounded text-break" style="font-family: monospace; min-height: 100px; white-space: pre-wrap;">
+                        <div id="contenedorSalida" class="bg-light p-3 rounded text-break" style="font-family: monospace; min-height: 100px; white-space: pre-wrap;">
                             <span class="text-muted fst-italic">El resultado aparecerá aquí...</span>
                         </div>
                     </div>
@@ -60,7 +70,7 @@
     </div>
 
     <div class="text-center my-4">
-        <button type="button" id="btnClean" class="btn btn-secondary">Limpiar</button>
+        <button type="button" id="botonLimpiar" class="btn btn-secondary">Limpiar</button>
     </div>
 
     <script src="./public/js/bundle.js"></script>

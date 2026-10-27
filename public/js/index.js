@@ -1,83 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const inputText = document.getElementById("inputText");
-    const inputSearch = document.getElementById("inputSearch");
-    const btnSearch = document.getElementById("btnSearch");
-    const btnClean = document.getElementById("btnClean");
-    const matchCount = document.getElementById("matchCount");
-    const outputContainer = document.getElementById("outputContainer");
-    
-    const alertContainer = document.getElementById("alertContainer");
-    const alertBox = document.getElementById("alertBox");
-    const alertMessage = document.getElementById("alertMessage");
+    const textoEntrada = document.getElementById("textoEntrada");
+    const campoBuscar = document.getElementById("campoBuscar");
+    const campoReemplazar = document.getElementById("campoReemplazar");
+    const botonBuscar = document.getElementById("botonBuscar");
+    const botonReemplazar = document.getElementById("botonReemplazar");
+    const botonLimpiar = document.getElementById("botonLimpiar");
+    const contadorCoincidencias = document.getElementById("contadorCoincidencias");
+    const contenedorSalida = document.getElementById("contenedorSalida");
 
-    const showAlert = (message, type = "danger") => {
-        alertMessage.textContent = message;
-        if (type === "danger") {
-            alertBox.className = "alert alert-danger fw-bold text-center py-3";
+    const contenedorAlerta = document.getElementById("contenedorAlerta");
+    const cajaAlerta = document.getElementById("cajaAlerta");
+    const mensajeAlerta = document.getElementById("mensajeAlerta");
+
+    const mostrarAlerta = (mensaje, tipo = "danger") => {
+        mensajeAlerta.textContent = mensaje;
+        if (tipo === "danger") {
+            cajaAlerta.className = "alert alert-danger fw-bold text-center py-3";
         } else {
-            alertBox.className = "alert alert-success fw-bold text-center py-3";
+            cajaAlerta.className = "alert alert-success fw-bold text-center py-3";
         }
-        alertContainer.style.display = "block";
+        contenedorAlerta.style.display = "block";
     };
 
-    const hideAlert = () => {
-        alertContainer.style.display = "none";
+    const ocultarAlerta = () => {
+        contenedorAlerta.style.display = "none";
     };
 
-    const escapeRegExp = (string) => {
-        return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escaparExpresionRegular = (cadena) => {
+        return cadena.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     };
 
-    const handleSearch = () => {
-        const textValue = inputText.value;
-        const searchTerm = inputSearch.value.trim();
-
-        if (!textValue && !searchTerm) {
-            showAlert("Por favor, ingresa el texto base y la palabra o carácter a buscar.");
-            return;
-        }
-        if (!textValue) {
-            showAlert("El campo de texto base está vacío.");
-            return;
-        }
-        if (!searchTerm) {
-            showAlert("Por favor, ingresa una palabra o carácter para realizar la búsqueda.");
-            return;
-        }
-
-        hideAlert();
-
-        const escapedTerm = escapeRegExp(searchTerm);
-        const regex = new RegExp(`(${escapedTerm})`, 'gi');
-
-        const matches = textValue.match(regex);
-        const count = matches ? matches.length : 0;
-
-        matchCount.textContent = count;
-
-        if (count === 0) {
-            showAlert(`No se encontraron coincidencias para "${searchTerm}".`);
-            outputContainer.innerHTML = `<span>${escapeHtml(textValue)}</span>`;
-            return;
-        }
-
-        const highlightedText = escapeHtml(textValue).replace(regex, `<mark class="bg-warning fw-bold px-1 rounded">$1</mark>`);
-        
-        outputContainer.innerHTML = highlightedText;
-        showAlert(`Se encontraron ${count} coincidencia(s) exitosamente.`, "success");
-    };
-
-    const handleClean = () => {
-        inputText.value = "";
-        inputSearch.value = "";
-        matchCount.textContent = "0";
-        outputContainer.innerHTML = `<span class="text-muted fst-italic">El resultado aparecerá aquí...</span>`;
-        hideAlert();
-        inputText.focus();
-    };
-
-    const escapeHtml = (text) => {
-        return text
+    const escaparHtml = (texto) => {
+        return texto
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
@@ -85,11 +39,104 @@ document.addEventListener("DOMContentLoaded", () => {
             .replace(/'/g, "&#039;");
     };
 
-    if (btnSearch) {
-        btnSearch.addEventListener("click", handleSearch);
+    const manejarBusqueda = () => {
+        const valorTexto = textoEntrada.value;
+        const terminoBusqueda = campoBuscar.value.trim();
+
+        if (!valorTexto && !terminoBusqueda) {
+            mostrarAlerta("Por favor, ingresa el texto base y la palabra o carácter a buscar.");
+            return;
+        }
+        if (!valorTexto) {
+            mostrarAlerta("El campo de texto base está vacío.");
+            return;
+        }
+        if (!terminoBusqueda) {
+            mostrarAlerta("Por favor, ingresa una palabra o carácter para realizar la búsqueda.");
+            return;
+        }
+
+        ocultarAlerta();
+
+        const terminoEscapado = escaparExpresionRegular(terminoBusqueda);
+        const expresionRegular = new RegExp(`(${terminoEscapado})`, 'gi');
+
+        const coincidencias = valorTexto.match(expresionRegular);
+        const total = coincidencias ? coincidencias.length : 0;
+
+        contadorCoincidencias.textContent = total;
+
+        if (total === 0) {
+            mostrarAlerta(`No se encontraron coincidencias para "${terminoBusqueda}".`);
+            contenedorSalida.innerHTML = `<span>${escaparHtml(valorTexto)}</span>`;
+            return;
+        }
+
+        const textoResaltado = escaparHtml(valorTexto).replace(expresionRegular, `<mark class="bg-warning fw-bold px-1 rounded">$1</mark>`);
+
+        contenedorSalida.innerHTML = textoResaltado;
+        mostrarAlerta(`Se encontraron ${total} coincidencia(s) exitosamente.`, "success");
+    };
+
+    const manejarReemplazo = () => {
+        const valorTexto = textoEntrada.value;
+        const terminoBusqueda = campoBuscar.value.trim();
+        const terminoReemplazo = campoReemplazar.value;
+
+        if (!valorTexto) {
+            mostrarAlerta("El campo de texto base está vacío.");
+            return;
+        }
+        if (!terminoBusqueda) {
+            mostrarAlerta("Por favor, ingresa la palabra o carácter que deseas reemplazar.");
+            return;
+        }
+
+        ocultarAlerta();
+
+        const terminoEscapado = escaparExpresionRegular(terminoBusqueda);
+        const expresionRegular = new RegExp(terminoEscapado, 'gi');
+
+        const coincidencias = valorTexto.match(expresionRegular);
+        const total = coincidencias ? coincidencias.length : 0;
+
+        contadorCoincidencias.textContent = total;
+
+        if (total === 0) {
+            mostrarAlerta(`No se encontraron coincidencias de "${terminoBusqueda}" para reemplazar.`);
+            contenedorSalida.innerHTML = `<span>${escaparHtml(valorTexto)}</span>`;
+            return;
+        }
+
+        const terminoReemplazoEscapado = escaparHtml(terminoReemplazo);
+        const textoReemplazadoHtml = escaparHtml(valorTexto).replace(
+            expresionRegular,
+            `<mark class="bg-info text-white fw-bold px-1 rounded">${terminoReemplazoEscapado}</mark>`
+        );
+
+        contenedorSalida.innerHTML = textoReemplazadoHtml;
+        mostrarAlerta(`Se reemplazaron ${total} coincidencia(s) exitosamente.`, "success");
+    };
+
+    const manejarLimpieza = () => {
+        textoEntrada.value = "";
+        campoBuscar.value = "";
+        campoReemplazar.value = "";
+        contadorCoincidencias.textContent = "0";
+        contenedorSalida.innerHTML = `<span class="text-muted fst-italic">El resultado aparecerá aquí...</span>`;
+        ocultarAlerta();
+        textoEntrada.focus();
+    };
+
+    if (botonBuscar) {
+        botonBuscar.addEventListener("click", manejarBusqueda);
     }
 
-    if (btnClean) {
-        btnClean.addEventListener("click", handleClean);
+    if (botonReemplazar) {
+        botonReemplazar.addEventListener("click", manejarReemplazo);
+    }
+
+    if (botonLimpiar) {
+        botonLimpiar.addEventListener("click", manejarLimpieza);
     }
 });
